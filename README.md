@@ -70,7 +70,33 @@ know how much data was lost, just ignoring lost data will give you a skewed
 image, but we suspect based on initial testing that it will still be mostly
 viewable still.
 
-The precises method of how you do that, is up to you.
+The precise method of how you do that, is up to you.
+
+# Useful notes and ideas
+
+1. In a jpg captured on a Mac, there are multiple RSTn records after every
+few bytes. We suspect those are there so that the distance between any
+known sync point is kept to a minimum. This might be a useful technique
+when transferring image data over a simplex (one way) unreliable link, in
+that the transmitter could send any headers multiple times for resilience,
+then it could choose to re-packetise data on the boundaries that it wants to
+use so that each payload fits inside a single radio packet. 
+
+2. A jpg captured from a Mac vs a jpg captured from an Arducam, follow the
+same encapsulation protocol, but the Mac has a lot more application specific
+data. If you strip this application specific data, the image is still valid.
+
+3. Arducam sends one huge image segment, but a transmitter could re form that into
+packets of 60 bytes each, prepend a header with a sequence number and add
+a checksum or crc, then transmit that as a single radio payload. The receiver
+would then be able to re-sync on packet loss to a useful boundary. Note you
+need to allow enough space in the payload for byte-stuffed FF's, as an FF
+in the image data gets stuffed into FF 00. But due to absence of any length
+bytes in the protocol, your sender could easily insert RSTn records at any
+arbitrary position. Note also there are 8 RSTn types RST0..RST7, so these
+could be cycled round 0,1,2,3,4,5,6,7->0,1,... to form a simple sequence
+number, perhaps.
+
 
 David Whale
 
