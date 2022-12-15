@@ -11,8 +11,11 @@ for the purposes of reliable record transfer over an unreliable link.
 
 JPG images are encapsulated in a streamed record format, where an FF byte
 marks a record segment. The byte after the FF defines the record type.
+This is part of the JFIF standard defined [here](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format)
 
-The JPG encapsulation format is defined [here](https://docs.fileformat.com/image/jpeg/)
+The full JPEG format, along with encapsulation, is defined [here](https://docs.fileformat.com/image/jpeg/)
+
+JPEG details such as the compression and encoding is well defined [here](https://en.wikipedia.org/wiki/JPEG)
 
 Record segments are not length byte preceeded and many can be variable length,
 so a record segment end is detected when another FF nn sequence occurs.
@@ -97,6 +100,14 @@ arbitrary position. Note also there are 8 RSTn types RST0..RST7, so these
 could be cycled round 0,1,2,3,4,5,6,7->0,1,... to form a simple sequence
 number, perhaps.
 
+# References
+
+
+[JPEG picture encoding](https://en.wikipedia.org/wiki/JPEG)
+
+[JFIF interchange format](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format)
+
+[JPEG and encapsulation](https://docs.fileformat.com/image/jpeg/)
 
 David Whale
 
